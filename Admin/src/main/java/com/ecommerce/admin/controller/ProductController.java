@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 
+
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
@@ -39,11 +40,15 @@ public class ProductController {
         if (principal == null) {
             return "redirect:/login";
         }
-        Page<ProductDto> products = productService.getAllProducts(pageNo);
+
+        // 페이지 번호가 0 이하일 경우, 0으로 설정하여 첫 번째 페이지를 조회합니다.
+        int realPageNo = Math.max(0, pageNo);
+
+        Page<ProductDto> products = productService.getAllProducts(realPageNo);
         model.addAttribute("title", "Manage Products");
         model.addAttribute("size", products.getSize());
-        model.addAttribute("products", products);
-        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("products", products.getContent()); // 실제 데이터 목록을 가져옵니다.
+        model.addAttribute("currentPage", realPageNo);
         model.addAttribute("totalPages", products.getTotalPages());
         return "products";
     }

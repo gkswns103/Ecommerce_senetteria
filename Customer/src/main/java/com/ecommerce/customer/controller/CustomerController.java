@@ -6,6 +6,7 @@ import com.ecommerce.library.model.Country;
 import com.ecommerce.library.service.CityService;
 import com.ecommerce.library.service.CountryService;
 import com.ecommerce.library.service.CustomerService;
+import com.ecommerce.library.service.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +29,7 @@ public class CustomerController {
     private final CountryService countryService;
     private final PasswordEncoder passwordEncoder;
     private final CityService cityService;
+    private final EmailService emailService;
 
     @GetMapping("/profile")
     public String profile(Model model, Principal principal) {

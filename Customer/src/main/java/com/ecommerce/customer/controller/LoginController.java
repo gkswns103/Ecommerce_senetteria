@@ -3,6 +3,7 @@ package com.ecommerce.customer.controller;
 import com.ecommerce.library.dto.CustomerDto;
 import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.service.CustomerService;
+import com.ecommerce.library.service.EmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     private final CustomerService customerService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -52,6 +54,13 @@ public class LoginController {
             }
             if (customerDto.getPassword().equals(customerDto.getConfirmPassword())) {
                 customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+
+                // 이메일 인증 코드 전송
+                int verificationCode = emailService.sendEmail(customerDto.getUsername());
+
+                // 인증 코드 검증 로직 추가 (예: 별도의 페이지에서 인증 코드 입력받기)
+
+
                 customerService.save(customerDto);
                 model.addAttribute("success", "Register successfully!");
             } else {

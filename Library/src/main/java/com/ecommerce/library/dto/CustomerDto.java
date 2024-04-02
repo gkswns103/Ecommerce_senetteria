@@ -28,4 +28,5 @@ public class CustomerDto {
     private String image;
     private String country;
 
+
 }

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verification</title>
+</head>
+<body>
+<h2>Email Verification</h2>
+<form action="/verifyCode" method="post">
+    <input type="hidden" name="email" th:value="${email}" required> <!-- 이메일 주소를 숨김 필드로 전달 -->
+    <input type="text" name="code" placeholder="Verification Code" required>
+    <button type="submit">Verify</button>
+</form>
+</body>
+</html>

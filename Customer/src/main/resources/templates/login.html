@@ -36,6 +36,9 @@
                 <div th:if = "${param.logout}" class="alert alert-success text-center">
                     You have been logged out!
                 </div>
+                <div th:if="${registrationSuccess}">
+                    <p class="alert alert-success" th:text="${registrationSuccess}"></p>
+                </div>
                 <form th:action="@{/do-login}" method="post">
                     <div class="input-form">
                         <input type="text" placeholder="Name" name="username" required>

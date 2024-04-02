@@ -2,14 +2,21 @@ package com.ecommerce.library.service;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
     private final JavaMailSender javaMailSender;  // 의존성 주입을 통해 필요한 객체를 가져옴
+    // 사용자 이메일과 인증 코드 매핑 저장을 위한 Map
+    private Map<String, Integer> verificationCodeMap = new ConcurrentHashMap<>();
+
     private static final String senderEmail= "kuzzop@gmail.com";
     private static int number;  // 랜덤 인증 코드
 
@@ -47,13 +54,37 @@ public class EmailService {
     }
 
     // 실제 메일 전송
-    public int sendEmail(String userId) {
-        // 메일 전송에 필요한 정보 설정
-        MimeMessage message = createMail(userId);
-        // 실제 메일 전송
-        javaMailSender.send(message);
+    public int sendEmail(String email) {
+        // 인증 코드 생성
+        createNumber();
+
+        // 사용자 이메일과 인증 코드 매핑 저장
+        verificationCodeMap.put(email, number);
+
+        // 메일 양식 작성
+        MimeMessage message = createMail(email);
+
+        try {
+            // 실제 메일 전송
+            javaMailSender.send(message);
+        } catch (MailException e) {
+            // 메일 전송 실패 처리
+            e.printStackTrace();
+            // 예외 처리를 간단히 출력
+            // 사용자에게 적절한 피드백을 제공해야함
+        }
 
         // 인증 코드 반환
         return number;
+    }
+    // 인증 코드 검증 메서드
+    public boolean verifyEmail(String email, int inputCode) {
+        Integer storedCode = verificationCodeMap.get(email);
+        if (storedCode != null && storedCode.equals(inputCode)) {
+            // 인증 성공 시, 해당 이메일의 인증 코드 정보 삭제
+            verificationCodeMap.remove(email);
+            return true;
+        }
+        return false;
     }
 }

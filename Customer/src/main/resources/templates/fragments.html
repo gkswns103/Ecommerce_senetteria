@@ -54,8 +54,8 @@
                 <div class="login-box">
                     <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
                         <option>Authentication</option>
-                        <option th:if = "${session.username == null}" value = "http://localhost:8889/shop/login">Sign In </option>
-                        <option th:if = "${session.username == null}" value ="http://localhost:8889/shop/register">Sign Up</option>
+                        <option th:if = "${session.username == null}" value = "http://localhost:8020/shop/login">Sign In </option>
+                        <option th:if = "${session.username == null}" value ="http://localhost:8020/shop/register">Sign Up</option>
                     </select>
                 </div>
                 <div class="text-slid-box">

@@ -11,10 +11,6 @@
     <div th:replace = "~{fragments::main-top}"></div>
     <!-- End Main Top -->
 
-    <!-- Start Main Top -->
-    <header th:replace = "~{fragments:: main-top}"></header>
-    <!-- End Main Top -->
-
     <!-- Start Top Search -->
     <div th:replace = "~{fragments::top-search}"></div>
     <!-- End Top Search -->
@@ -51,7 +47,8 @@
 
                         <div class="input-form">
                             <div class="input-form">
-                            <input type="email" placeholder="Username" name="username" th:field = "*{username}" required>
+                                <input type="email" placeholder="Username" name="username" th:field = "*{username}" required>
+                            </div>
                         </div>
                     <div class="input-form">
                         <input type="password" placeholder="Password" name="password" th:field = "*{password}" required>
@@ -65,7 +62,7 @@
                         <p>이미 계정이 있나요? <a th:href = "@{/login}"> 로그인 하세요 </a></p>
                     </div>
                     <div class="input-form">
-                        <input type="submit" value="Sign up">
+                        <input type="submit" value="Sign up" onclick="openVerifyEmailPopup();">
                     </div>
                 </form>
                 <h3>다른 방법으로 로그인</h3>
@@ -77,6 +74,30 @@
             </div>
         </div>
     </section>
+
+
+    <!-- <script th:inline="javascript">
+        function openVerifyEmailPopup(email) {
+            var verifyEmailUrl = "/verify-email?email=" + encodeURIComponent(email);
+            var popupWindow = window.open(verifyEmailUrl, "verifyEmailPopup", "width=400,height=300");
+        }
+
+        /*[+
+            var message = [(${message})];
+            if (message) {
+                alert(message);
+                var email = [(${email})];
+                openVerifyEmailPopup(email);
+            }
+        +]*/
+    </script> !-->
+
+    <script>
+        function openVerifyEmailPopup() {
+            let popOption = 'width=500,height=400'
+            window.open('/shop/verify-email', 'pop', popOption);
+        }
+    </script>
 
     <footer th:replace = "~{fragments:: footer}"></footer>
 

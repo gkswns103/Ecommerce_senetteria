@@ -17,8 +17,9 @@ public class EmailService {
     // 사용자 이메일과 인증 코드 매핑 저장을 위한 Map
     private Map<String, Integer> verificationCodeMap = new ConcurrentHashMap<>();
 
-    private static final String senderEmail= "kuzzop@gmail.com";
+    private static final String senderEmail= "gkswns103@gmail.com";
     private static int number;  // 랜덤 인증 코드
+
 
     // 랜덤 인증 코드 생성
     public static void createNumber() {

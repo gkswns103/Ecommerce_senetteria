@@ -1,15 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:height="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Email Verification</title>
+    <title>이메일 인증</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h2>Email Verification</h2>
-<form action="/verifyCode" method="post">
-    <input type="hidden" name="email" th:value="${email}" required> <!-- 이메일 주소를 숨김 필드로 전달 -->
-    <input type="text" name="code" placeholder="Verification Code" required>
-    <button type="submit">Verify</button>
-</form>
+<body class="bg-gray-100">
+<div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <h1 class="block text-gray-700 text-xl font-bold mb-2">이메일 인증</h1>
+        </div>
+        <div class="flex justify-center mb-4">
+            <img src="images\free-icon-email-3653846.png" height="50px" width="50px">
+        </div>
+        <section id="register-form">
+            <div class="noi-dung">
+                <div class="form">
+                    <form action="/verifyCode" method="post">
+                        <input type="hidden" name="email" th:value="${email}" required> <!-- 이메일 주소를 숨김 필드로 전달 -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">인증번호</label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                   name="code" type="text" placeholder="인증번호를 적어주세요" required>
+                         </div>
+                        <div class="flex items-center justify-between">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">인증</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        </div>
+    </div>
+    <footer class="w-full text-center border-t border-grey p-4 pin-b">
+        <h2 class="text-sm text-gray-600">세네뜨리아 이메일 인증</h2>
+    </footer>
+</div>
 </body>
 </html>

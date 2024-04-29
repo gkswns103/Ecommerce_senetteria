@@ -13,6 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URL;
+
+
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -42,6 +45,15 @@ public class LoginController {
         model.addAttribute("email", email);
         return "verify-email"; // 이메일 인증 코드를 입력할 수 있는 HTML 뷰의 이름
     }
+
+    /* @RequestMapping("/shop/verify-email")
+    public String popupVerifyEmailPage(String email , int code) {
+        if (emailService.verifyEmail(email,code)){
+            System.out.print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            return "/shop/login";
+        }
+        return "error";
+    } */
 
 
     @PostMapping("/do-register")
@@ -74,10 +86,10 @@ public class LoginController {
         // 사용자의 이메일 주소에 이메일 인증 코드 전송
         int verificationCode = emailService.sendEmail(savedCustomer.getUsername());
         redirectAttributes.addFlashAttribute("message", "이메일 인증 코드가 전송되었습니다. 이메일을 확인해 주세요.");
-
         // 인증 코드 입력을 위해 사용자를 인증 페이지로 리디렉션
         redirectAttributes.addFlashAttribute("email", savedCustomer.getUsername());
-        return "redirect:/verify-email";
+        return "/login";
+
     }
 
 
